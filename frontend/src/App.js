@@ -21,7 +21,7 @@ function App() {
   const updateMobileTabScrollState = () => {
     const el = mobileTabsContainerRef.current;
     if (!el) return;
-    const maxScrollLeft = el.scrollWidth - el.clientWidth;
+   
     
   };
 
