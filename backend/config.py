@@ -115,7 +115,7 @@ class Config:
         'age_margin_default': 1,
         'age_margin_child': 1,
         'age_margin_elderly': 2,
-        'fast_mode': True,  # Modo rápido para TTA reduzir inferências
+        'fast_mode': True,  
 
 
         'child_cap_enabled': False,
@@ -152,7 +152,7 @@ class Config:
             "40-49", "50-59", "60-69", "70+"
         ],
 
-        # Regras do ensemble para idade: reduzir peso de textura/tradicional
+        
         'ensemble_method_weights': {
             'tflite_age_regression': 0.75,
             'tflite_age_classes': 0.80,
@@ -162,13 +162,13 @@ class Config:
             'traditional_enhanced': 0.1
         },
 
-        # Votos/limiares adicionais usados no ensemble
+        
         'child_prob_vote_threshold': 0.80,
         'elderly_prob_vote_threshold': 0.88,
         'child_indicators_vote_threshold': 3.5,
         'elderly_indicators_vote_threshold': 7.0,
 
-        # Salvaguarda: não retornar <18 sem evidência infantil forte
+    
         'min_adult_age_without_strong_child_evidence': 23,
     }
 

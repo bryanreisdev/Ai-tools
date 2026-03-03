@@ -77,7 +77,7 @@ class CacheManager:
     
     def set(self, key: str, value: Dict[Any, Any], expire_hours: int = 24) -> bool:
         try:
-            # Pular objetos muito grandes no cache em memória/disco
+
             try:
                 est_size = len(json.dumps(value))
                 if est_size > self.max_value_bytes:
@@ -88,7 +88,7 @@ class CacheManager:
             if self.cache_type == 'redis':
                 self.cache.setex(key, timedelta(hours=expire_hours), json.dumps(value))
             else:
-                # Evitar crescimento ilimitado do cache em memória
+            
                 if len(self.cache) >= self.max_items:
                     try:
                         oldest_key = next(iter(self.cache.keys()))

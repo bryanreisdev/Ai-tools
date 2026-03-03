@@ -42,7 +42,7 @@ else:
 
 class AdvancedAgeDetector:
     def __init__(self):
-        # Verifica se o modo somente TFLite está ativo
+    
         tflite_only = False
         try:
             from config import Config
@@ -65,14 +65,14 @@ class AdvancedAgeDetector:
         
         self._age_cache = {}
 
-        # TFLite opcional para idade
+    
         self._tflite_age_enabled = False
         try:
             from config import Config
             age_cfg = getattr(Config, 'AGE_CONFIG', {})
             if age_cfg.get('use_tflite_age', False):
                 import os
-                # Fallback: tenta tflite_runtime e, se indisponível, usa TensorFlow Lite
+             
                 InterpreterClass = None
                 try:
                     import tflite_runtime.interpreter as tflite
@@ -89,7 +89,7 @@ class AdvancedAgeDetector:
                             raise ImportError(_e)
                 self._tflite_age_path = age_cfg.get('tflite_age_model_path', 'models/age_regression.tflite')
                 self._tflite_age_threads = int(age_cfg.get('tflite_age_threads', 2))
-                # Gera modelo TFLite simples se arquivo estiver ausente/vazio
+
                 def _ensure_tflite_age_model():
                     try:
                         need_create = (not os.path.exists(self._tflite_age_path)) or (os.path.getsize(self._tflite_age_path) == 0)
@@ -4098,7 +4098,7 @@ class AdvancedEthnicityDetector:
     
     def _predict_with_cnn_enhanced(self, face_img: np.ndarray) -> Dict[str, Any]:
         try:
-            # Cache para evitar reprocessamento
+    
             img_hash = hash(face_img.tobytes()) + hash('cnn_enhanced')
             if img_hash in self._prediction_cache:
                 return self._prediction_cache[img_hash]
@@ -4107,7 +4107,7 @@ class AdvancedEthnicityDetector:
             face_normalized = face_resized.astype('float32') / 255.0
             face_expanded = np.expand_dims(face_normalized, axis=0)
             
-            # Usar função otimizada se disponível
+          
             if hasattr(self, '_optimized_ethnicity_predict'):
                 predictions = self._optimized_ethnicity_predict(face_expanded)[0].numpy()
             else:
@@ -4127,7 +4127,7 @@ class AdvancedEthnicityDetector:
                 'probabilities': ethnicity_probs
             }
             
-            # Cache limitado
+
             if len(self._prediction_cache) < 100:
                 self._prediction_cache[img_hash] = result
             
@@ -4317,7 +4317,7 @@ class AdvancedDemographicsDetector:
             print(f"📊 Iniciando análise demográfica (ID: {cache_key})")
             
             img = self._decode_image(image_data)
-            # Downscale agressivo para economizar memória/CPU (ex.: 1024px máx)
+          
             try:
                 h, w = img.shape[:2]
                 max_dim = 1024
@@ -4345,7 +4345,7 @@ class AdvancedDemographicsDetector:
                 faces = self._detect_faces_advanced(img_enhanced)
             
             if len(faces) == 0:
-                # Modo rápido: pular métodos alternativos e detecção ultra-sensível
+      
                 print("⚠️ Modo rápido: pulando métodos alternativos e detecção ultra-sensível")
             
             if len(faces) == 0:
@@ -4363,7 +4363,7 @@ class AdvancedDemographicsDetector:
             
             print(f"👥 {len(faces)} face(s) detectada(s) e validada(s)")
             
-            # Processamento assíncrono controlado para reduzir memória
+           
             from concurrent.futures import ThreadPoolExecutor, as_completed
             try:
                 try:
@@ -4396,7 +4396,7 @@ class AdvancedDemographicsDetector:
                         demographics['face_id'] = i + 1
                         demographics['detection_quality'] = quality
                         results.append(demographics)
-                        # liberar referências cedo
+                 
                         try:
                             faces[i]['image'] = None
                             faces[i]['gray'] = None
@@ -4433,7 +4433,7 @@ class AdvancedDemographicsDetector:
             }
             
             final_result = convert_numpy_types(result)
-            # Libera imagem e faces (buffers grandes)
+         
             try:
                 del img, faces
             except Exception:
@@ -4461,8 +4461,7 @@ class AdvancedDemographicsDetector:
                 raise ValueError("Formato de imagem inválido")
             if img.shape[0] < 100 or img.shape[1] < 100:
                 raise ValueError("Imagem muito pequena")
-            
-            # Redimensionar se a imagem for muito grande para otimizar processamento
+       
             h, w = img.shape[:2]
             max_dimension = 1920
             
@@ -4524,7 +4523,7 @@ class AdvancedDemographicsDetector:
             
             all_faces = []
             
-            # Modo rápido: tentar apenas a primeira configuração principal
+          
             for config in primary_configs[:1]:
                 try:
                     faces = config['cascade'].detectMultiScale(
@@ -4548,7 +4547,7 @@ class AdvancedDemographicsDetector:
             if len(all_faces) == 0:
                 print("🔍 Tentando com imagem aprimorada (modo rápido)...")
                 
-                # Modo rápido: apenas a primeira configuração com imagem aprimorada
+
                 for config in primary_configs[:1]:
                     try:
                         faces = config['cascade'].detectMultiScale(
@@ -4569,7 +4568,7 @@ class AdvancedDemographicsDetector:
                         continue
             
             if len(all_faces) == 0:
-                # Modo rápido: uma única configuração sensível e só
+          
                 print("🔍 Tentando uma configuração mais sensível (modo rápido)...")
                 config = {
                     'scale_factor': 1.08,
@@ -4589,7 +4588,7 @@ class AdvancedDemographicsDetector:
                     print(f"✅ {len(faces)} face(s) detectada(s) com configuração sensível (modo rápido)")
             
             if len(all_faces) > 0:
-                # Unir/mesclar detecções redundantes do mesmo rosto
+
                 from config import Config
                 unique_faces = self._merge_overlapping_faces(
                     all_faces,
@@ -4628,7 +4627,7 @@ class AdvancedDemographicsDetector:
                 
                 faces_data.sort(key=lambda x: x['quality'], reverse=True)
 
-                # Remover duplicatas residuais escolhendo a melhor por cluster
+               
                 from config import Config
                 faces_data = self._cluster_and_select_faces(
                     faces_data,
@@ -4636,7 +4635,7 @@ class AdvancedDemographicsDetector:
                     center_threshold=getattr(Config, 'FACE_DETECTION_CONFIG', {}).get('cluster_center_threshold', 0.35)
                 )
                 
-                # Se a intenção é 1 rosto dominante, mantenha somente o de melhor qualidade quando houver forte sobreposição
+              
                 if len(faces_data) > 1:
                     faces_data = self._cluster_and_select_faces(faces_data, iou_threshold=0.28, center_threshold=0.35)
                 from config import Config
@@ -5006,7 +5005,7 @@ class AdvancedDemographicsDetector:
                 elderly_indicators *= 0.7
                 child_indicators *= 0.7
             
-            # Reforço por cabelo grisalho/branco
+            
             gray_hair_score = self._detect_gray_hair(face_img, face_gray)
 
             base_age = 30
