@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+body {
+  background: #0f172a;
+  color: #e5e7eb;      
+}
+
+/* Animações customizadas */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s infinite;
+}
+
+/* Efeitos de glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Efeitos de hover para botões */
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hover-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-hover-effect:hover::before {
+  left: 100%;
+}
+
+/* Tema futurista: fundo animado, grid sutil, orbes e efeitos neon */
+:root {
+  --neon-blue: #00F5FF;
+  --neon-purple: #7C3AED;
+  --neon-pink: #FF2D95;
+}
+
+/* Fundo com gradiente animado sutil */
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bg-animated {
+  background-size: 200% 200%;
+  animation: gradient-pan 18s ease infinite;
+}
+
+/* Aurora background suave com vários gradientes radiais animados */
+@keyframes aurora-shift {
+  0% { background-position: 0% 50%, 100% 50%, 50% 0%; }
+  50% { background-position: 100% 50%, 0% 50%, 50% 100%; }
+  100% { background-position: 0% 50%, 100% 50%, 50% 0%; }
+}
+
+.bg-aurora {
+  background-image:
+    radial-gradient(60% 80% at 10% 20%, rgba(99,102,241,0.18), transparent 60%),
+    radial-gradient(60% 80% at 90% 80%, rgba(236,72,153,0.14), transparent 60%),
+    radial-gradient(100% 80% at 50% 0%, rgba(56,189,248,0.14), transparent 60%);
+  background-repeat: no-repeat;
+  background-size: 120% 120%, 120% 120%, 120% 120%;
+  animation: aurora-shift 30s ease-in-out infinite;
+}
+
+/* Grid sutil para dar sensação futurista */
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px;
+  background-position: -1px -1px, -1px -1px;
+}
+
+/* Orbes (luzes) desfocadas flutuando ao fundo */
+@keyframes float-slow {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-12px) translateX(8px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(40px);
+  opacity: 0.35;
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+.orb-blue {
+  width: 420px; height: 420px;
+  left: -120px; top: -120px;
+  background: radial-gradient(circle at 30% 30%, rgba(0,245,255,0.6), transparent 60%);
+}
+
+.orb-purple {
+  width: 380px; height: 380px;
+  right: -100px; bottom: -100px;
+  background: radial-gradient(circle at 70% 70%, rgba(124,58,237,0.5), transparent 60%);
+  animation-delay: 1.5s;
+}
+
+.orb-green {
+  width: 360px; height: 360px;
+  left: 30%; bottom: -140px;
+  background: radial-gradient(circle at 50% 50%, rgba(16,185,129,0.35), transparent 60%);
+  animation-delay: 0.75s;
+}
+
+/* Borda e brilho neon para cartões/botões */
+.neon-border {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.3) inset,
+    0 0 12px rgba(0,245,255,0.18),
+    0 6px 18px rgba(17,24,39,0.08);
+}
+
+.btn-neon {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15) inset,
+    0 8px 22px rgba(99,102,241,0.25),
+    0 0 14px rgba(0,245,255,0.15);
+}
+
+.btn-neon:hover {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.25) inset,
+    0 10px 26px rgba(99,102,241,0.35),
+    0 0 18px rgba(0,245,255,0.22);
+}
+
+/* Efeito shimmer sutil para títulos */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Animação do overlay de análise (substitui framer-motion) */
+@keyframes neon-glow {
+  0% { box-shadow: 0 0 10px rgba(0,245,255,0.6), 0 0 0 rgba(0,245,255,0.0); }
+  50% { box-shadow: 0 0 18px rgba(0,245,255,0.9), 0 0 22px rgba(0,245,255,0.35); }
+  100% { box-shadow: 0 0 10px rgba(0,245,255,0.6), 0 0 0 rgba(0,245,255,0.0); }
+}
+
+@keyframes scan-sweep {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.neon-scan-box {
+  border-color: var(--neon-blue);
+  animation: neon-glow 1.6s ease-in-out infinite;
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--neon-blue);
+  animation: scan-sweep 1.6s linear infinite;
+}
+
+/* Anel de progresso circular (usa variáveis CSS --progress [0..100] e --color) */
+.circular-progress {
+  --progress: 0;
+  --color: #7C3AED;
+  width: 88px;
+  height: 88px;
+  border-radius: 9999px;
+  background: conic-gradient(var(--color) calc(var(--progress) * 1%), rgba(0,0,0,0.08) 0);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Utilitário para esconder scrollbar em containers horizontais */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar { /* Chrome/Safari */
+  display: none;
+}
+
+/* Contém a rolagem horizontal nas abas móveis e evita scroll chaining da página */
+.tabs-mobile-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  max-width: 100vw;
+}
+
+/* Reforço geral para impedir qualquer overflow horizontal do documento */
+html, body {
+  max-width: 100vw;
+}
+
+@media (max-width: 500px) {
+  
+  .tabs-mobile-scroll { overflow-x: auto; } /* era visible: causava overflow da página */
+  .tabs-mobile { flex-wrap: wrap; justify-content: center; gap: 0.5rem; box-sizing: border-box; }
+  .tabs-mobile .tab-pill { min-width: auto; width: calc(50% - 0.5rem); max-width: 100%; transform: none !important; }
+  .tabs-mobile .tab-pill:hover { transform: none !important; }
+  .tabs-mobile .tab-pill * { transform: none !important; }
+  .tabs-mobile-arrow { display: none !important; }
+
+  /* Reduz padding do container das abas para evitar empurrão lateral */
+  .tabs-mobile-scroll { padding-left: 8px; padding-right: 8px; scroll-padding-left: 0; scroll-padding-right: 0; }
+
+  
+  .demographics-summary-grid { grid-template-columns: 1fr !important; }
+}
+
+.circular-progress::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: white;
+  border-radius: 9999px;
+}
+
+/* Partículas flutuantes sutis no fundo */
+@keyframes float-particle {
+  0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  50% { transform: translateY(-12px) translateX(8px); opacity: 0.35; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+}
+.particle {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 9999px;
+  filter: blur(1px);
+  animation-name: float-particle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
