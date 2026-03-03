@@ -16,15 +16,13 @@ function App() {
   ];
   const mobileTabsContainerRef = useRef(null);
   const tabRefs = useRef({});
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+ 
 
   const updateMobileTabScrollState = () => {
     const el = mobileTabsContainerRef.current;
     if (!el) return;
     const maxScrollLeft = el.scrollWidth - el.clientWidth;
-    setCanScrollLeft(el.scrollLeft > 0);
-    setCanScrollRight(el.scrollLeft < maxScrollLeft - 1);
+    
   };
 
   const centerActiveMobileTab = useCallback(() => {
@@ -38,12 +36,7 @@ function App() {
     container.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
   }, [activeTab]);
 
-  const scrollMobileTabs = (direction) => {
-    const el = mobileTabsContainerRef.current;
-    if (!el) return;
-    const amount = Math.round(el.clientWidth * 0.8);
-    el.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' });
-  };
+ 
 
   useEffect(() => {
     centerActiveMobileTab();
