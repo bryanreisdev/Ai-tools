@@ -8,7 +8,7 @@
 docker-compose.backend.yml
 /coverage
 
-#
+.env
 
 # misc
 .DS_Store
